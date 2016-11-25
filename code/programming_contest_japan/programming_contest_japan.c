@@ -15,7 +15,7 @@
 #define PRODUCT_CODE_MAX        24
 #define TYPE_CODE_MAX           10
 #define MASTER_PATH             "/data/master.csv"
-#define BRANCH_PATH_1			"/data/shiten001.csv"
+#define BRANCH_PATH_1		"/data/shiten001.csv"
 #define BRANCH_PATH_2           "/data/shiten002.csv"
 #define BRANCH_PATH_3           "/data/shiten003.csv"
 #define BRANCH_PATH_4           "/data/shiten004.csv"
@@ -25,18 +25,18 @@
 #define BRANCH_PATH_8           "/data/shiten008.csv"
 #define BRANCH_PATH_9           "/data/shiten009.csv"
 #define BRANCH_PATH_10          "/data/shiten010.csv"
-#define OUT_FILE_PATH			"/data/outfile.csv"
-#define OUT_FILE_TITLE			"日付,売上合計数"
+#define OUT_FILE_PATH		"/data/outfile.csv"
+#define OUT_FILE_TITLE		"日付,売上合計数"
 #define NAME_SIZE_MAX           256
-#define HASH_TABLE_LEN  		32
-#define HASH_TABLE_POS			20161000
-#define BRANCH_NUM_MAX			10
+#define HASH_TABLE_LEN  	32
+#define HASH_TABLE_POS		20161000
+#define BRANCH_NUM_MAX		10
 
 
 static const char* branch_path[] = 
 {
-		BRANCH_PATH_1,
-		BRANCH_PATH_2,
+	BRANCH_PATH_1,
+	BRANCH_PATH_2,
         BRANCH_PATH_3,
         BRANCH_PATH_4,
         BRANCH_PATH_5,
@@ -77,7 +77,7 @@ typedef struct
 typedef union 
 {
 	Product_Master_Title	title;
-	Product_Master_Data		data;
+	Product_Master_Data	data;
 } Product_Master;
 Product_Master m_productMaster[PRODUCT_CODE_MAX];
 
@@ -149,8 +149,8 @@ void init_hash_table(void)
 
 void add_hash_node(pHash_Node newNode)
 {
-	pHash_Node node;
-	uint8_t id;
+	pHash_Node 	node;
+	uint8_t 	id;
 
 	id = hash_id_func(newNode->data->date);
 	if (hash_table[id]->next == NULL)
@@ -172,9 +172,9 @@ void add_hash_node(pHash_Node newNode)
 
 void init_array(void)
 {
-	uint8_t i;
-	uint64_t count = 0;
-	pHash_Node node;	
+	uint8_t 	i;
+	uint64_t 	count = 0;
+	pHash_Node 	node;	
 
 	for (i = 0; i < HASH_TABLE_LEN; i++)
 	{
@@ -227,10 +227,10 @@ void readProductMasterData(void)
 
 void readBranchSalesData(void)
 {
-	uint8_t i = 0;
+	uint8_t 	i = 0;
 	uint64_t	j = 0;
-	pHash_Node node;
-	FILE* fp;
+	pHash_Node 	node;
+	FILE* 		fp;
 	char title[NAME_SIZE_MAX];
 	
 	for (i = 0; i < BRANCH_NUM_MAX; i++)
@@ -287,23 +287,14 @@ void writeFile(void)
 	return;
 }
 
-
-
-
-
-
-
-
-
 void main ()
 {
-	uint8_t				i;
+	uint8_t			i;
 	struct  timeval		start;
 	struct  timeval		end;
-	uint64_t			timer;
+	uint64_t		timer;
 
-
-	 gettimeofday(&start,NULL);
+	gettimeofday(&start,NULL);
 
 	readProductMasterData();
 	
@@ -315,16 +306,15 @@ void main ()
 
 	writeFile();	
 
-	 gettimeofday(&end,NULL);
-	 timer = 1000000 * (end.tv_sec-start.tv_sec)+ end.tv_usec-start.tv_usec;
-	 printf("timer = %ld us\n",timer);
+	gettimeofday(&end,NULL);
+	timer = 1000000 * (end.tv_sec-start.tv_sec)+ end.tv_usec-start.tv_usec;
+	printf("timer = %ld us\n",timer);
 
 	for(i = 0; i < HASH_TABLE_LEN; i++)
 	{
 		if (m_out_data[i].date != 0)
 			printf("date = %d, count = %ld\n", m_out_data[i].date, m_out_data[i].count);
 	}
-
     return;
 }
 

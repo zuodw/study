@@ -3,17 +3,18 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* 排序二叉树，递归/非递归遍历输出 */
 
 typedef struct _Node
 {
-	uint32_t			data;
+	uint32_t		data;
 	struct _Node*		left;
 	struct _Node*		right;
 } Node, *pNode;
 
 typedef struct _StackNode
 {
-	pNode				node;
+	pNode			node;
 	struct _StackNode*	prev;
 } StackNode, *pStackNode;
 
